@@ -1,0 +1,66 @@
+library(leaps)
+library(glmnet)
+
+#Setting the working directory for the R-Script
+setwd("D:\\Fall18 Classes\\IS777-DataAnalytics\\GroupC")
+
+#Reading the CSV file as dataframe
+v1<-read.csv('Merged_Dataset_NO_ID_Factored.csv',sep='\t')
+#v1<-read.csv('Merged_Dataset_NO_ID.csv',sep='\t')
+
+head(v1)
+summary(v1)
+
+names(v1)
+dim(v1)
+
+#checking for missing elements in the response variable if any:#there is none
+
+sum(is.na(v1$LOS))
+
+regfit.full=regsubsets(LOS~.,data=v1 ,nvmax =32)
+reg.summary =summary (regfit.full)
+names(reg.summary )
+
+
+reg.summary$rsq
+
+
+x=model.matrix (LOS~.,v1 )[,-1]
+y=v1$LOS
+
+
+set.seed (1)
+train=sample (1: nrow(x), nrow(x)/2)
+test=(- train )
+y.test=y[test]
+
+
+
+grid =10^ seq (10,-2, length =100)
+lasso.mod =glmnet (x[train ,],y[train],alpha =1, lambda =grid)
+plot(lasso.mod)
+#We can see from the coefficient plot that depending on the choice of tuning
+#parameter, some of the coefficients will be exactly equal to zero.
+
+
+
+
+#Let us perform  cross validation and compute the associated error
+set.seed (1)
+cv.out =cv.glmnet (x[train ,],y[train],alpha =1,lambda=grid)
+plot(cv.out)
+bestlam =cv.out$lambda.min
+lasso.pred=predict (lasso.mod ,s=bestlam ,newx=x[test ,])
+mean(( lasso.pred -y.test)^2)
+
+
+#MSE is 51.32. which is substantially lower than the null model and of least square 
+
+out=glmnet (x,y,alpha =1, lambda =grid)
+
+lasso.coef=predict (out ,type ="coefficients",s=bestlam )[1:32 ,]
+lasso.coef
+lasso.coef[lasso.coef !=0]
+
+#there are 7 variables co-eeficients which are exactly zero.
