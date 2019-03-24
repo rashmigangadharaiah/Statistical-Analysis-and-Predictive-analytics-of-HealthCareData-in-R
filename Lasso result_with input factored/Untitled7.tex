@@ -1,0 +1,722 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Untitled7}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k+kn}{library}\PY{p}{(}ISLR\PY{p}{)}
+         \PY{k+kn}{library}\PY{p}{(}MASS\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}Setting the working directory for the R\PYZhy{}Script}
+        \PY{k+kp}{setwd}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{D:\PYZbs{}\PYZbs{}Fall18 Classes\PYZbs{}\PYZbs{}IS777\PYZhy{}DataAnalytics\PYZbs{}\PYZbs{}GroupC\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{}Reading the CSV file as dataframe}
+        \PY{c+c1}{\PYZsh{}v1\PYZlt{}\PYZhy{}read.csv(\PYZsq{}Merged\PYZus{}Dataset\PYZus{}NO\PYZus{}ID\PYZus{}Factored.csv\PYZsq{},sep=\PYZsq{}\PYZbs{}t\PYZsq{})}
+        v1\PY{o}{\PYZlt{}\PYZhy{}}read.csv\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Merged\PYZus{}Dataset\PYZus{}NO\PYZus{}ID.csv\PYZsq{}}\PY{p}{,}sep\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZbs{}t\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k+kp}{head}\PY{p}{(}v1\PY{p}{)}
+        \PY{k+kp}{summary}\PY{p}{(}v1\PY{p}{)}
+\end{Verbatim}
+
+    \begin{tabular}{r|lllllllllllllllllllllllllllllllll}
+ age & gender & race & marital & area & income & education & mortscore & betterwalk & betterbed & ... & checkvaccine & checkfootcare & HHTcare & HHTcomm & HHTdiscuss & admittedhospital & urgent & readmittedhospital & emergencyhospital & LOS\\
+\hline
+	 22.09     & 1         & 0         & 0         & 0         & 174.95024 & 1         & 96015     & 1         & 0         & ...       & 1         & 0         & 1         & 1         & 1         & 1         & 1         & 1         & 1         & 24.60    \\
+	 40.96     & 1         & 0         & 0         & 1         &  82.23359 & 1         & 36806     & 1         & 0         & ...       & 0         & 0         & 1         & 0         & 1         & 0         & 0         & 0         & 0         &  8.37    \\
+	 81.00     & 1         & 0         & 0         & 1         &  35.00407 & 0         &  4706     & 1         & 1         & ...       & 0         & 0         & 1         & 1         & 1         & 0         & 0         & 0         & 0         & 40.12    \\
+	 29.16     & 0         & 0         & 0         & 0         & 197.86215 & 1         & 41436     & 1         & 0         & ...       & 0         & 1         & 1         & 1         & 1         & 0         & 0         & 0         & 0         & 14.79    \\
+	 46.24     & 0         & 2         & 0         & 0         & 115.20864 & 1         & 42496     & 1         & 1         & ...       & 1         & 0         & 1         & 1         & 1         & 1         & 0         & 1         & 0         & 33.68    \\
+	 40.96     & 0         & 0         & 4         & 0         & 111.87287 & 1         & 80594     & 0         & 1         & ...       & 1         & 1         & 1         & 1         & 1         & 1         & 1         & 0         & 0         & 36.21    \\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+      age            gender            race           marital     
+ Min.   : 0.00   Min.   :0.0000   Min.   :0.0000   Min.   :0.000  
+ 1st Qu.:36.00   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.000  
+ Median :44.89   Median :0.0000   Median :0.0000   Median :0.000  
+ Mean   :45.72   Mean   :0.4227   Mean   :0.7426   Mean   :0.395  
+ 3rd Qu.:54.76   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.000  
+ Max.   :98.01   Max.   :1.0000   Max.   :4.0000   Max.   :4.000  
+      area            income         education       mortscore    
+ Min.   :0.0000   Min.   :  0.00   Min.   :0.000   Min.   :    1  
+ 1st Qu.:0.0000   1st Qu.: 53.18   1st Qu.:1.000   1st Qu.:24912  
+ Median :1.0000   Median : 86.90   Median :1.000   Median :49587  
+ Mean   :0.5379   Mean   : 94.84   Mean   :1.207   Mean   :49673  
+ 3rd Qu.:1.0000   3rd Qu.:126.71   3rd Qu.:1.000   3rd Qu.:74495  
+ Max.   :1.0000   Max.   :511.09   Max.   :3.000   Max.   :99123  
+   betterwalk       betterbed        betterbath       bettermove   
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.000  
+ 1st Qu.:1.0000   1st Qu.:0.0000   1st Qu.:1.0000   1st Qu.:0.000  
+ Median :1.0000   Median :1.0000   Median :1.0000   Median :1.000  
+ Mean   :0.9016   Mean   :0.5008   Mean   :0.9959   Mean   :0.503  
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.000  
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.000  
+  betterbreath     betterheal     bettertaking    adverseevent  
+ Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000  
+ 1st Qu.:1.000   1st Qu.:1.000   1st Qu.:1.000   1st Qu.:0.000  
+ Median :1.000   Median :1.000   Median :1.000   Median :2.000  
+ Mean   :0.988   Mean   :0.988   Mean   :0.984   Mean   :1.571  
+ 3rd Qu.:1.000   3rd Qu.:1.000   3rd Qu.:1.000   3rd Qu.:2.000  
+ Max.   :1.000   Max.   :1.000   Max.   :1.000   Max.   :4.000  
+     drugu            alcolu          istimely        taughtdrug    
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:1.0000   1st Qu.:1.0000  
+ Median :0.0000   Median :0.0000   Median :1.0000   Median :1.0000  
+ Mean   :0.4034   Mean   :0.3986   Mean   :0.8482   Mean   :0.9687  
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+   checkfall     checkdepression   checkflushot     checkvaccine  
+ Min.   :0.000   Min.   :0.0000   Min.   :0.0000   Min.   :0.000  
+ 1st Qu.:0.000   1st Qu.:0.0000   1st Qu.:1.0000   1st Qu.:0.000  
+ Median :1.000   Median :0.0000   Median :1.0000   Median :1.000  
+ Mean   :0.502   Mean   :0.4782   Mean   :0.8989   Mean   :0.501  
+ 3rd Qu.:1.000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.000  
+ Max.   :1.000   Max.   :1.0000   Max.   :1.0000   Max.   :1.000  
+ checkfootcare       HHTcare          HHTcomm       HHTdiscuss    
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.00   Min.   :0.0000  
+ 1st Qu.:0.0000   1st Qu.:1.0000   1st Qu.:1.00   1st Qu.:1.0000  
+ Median :0.0000   Median :1.0000   Median :1.00   Median :1.0000  
+ Mean   :0.4992   Mean   :0.9614   Mean   :0.98   Mean   :0.9875  
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.00   3rd Qu.:1.0000  
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.00   Max.   :1.0000  
+ admittedhospital     urgent       readmittedhospital emergencyhospital
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000     Min.   :0.0000   
+ 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000     1st Qu.:0.0000   
+ Median :1.0000   Median :0.0000   Median :0.0000     Median :0.0000   
+ Mean   :0.5008   Mean   :0.4828   Mean   :0.4074     Mean   :0.2002   
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000     3rd Qu.:0.0000   
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.0000     Max.   :1.0000   
+      LOS       
+ Min.   : 0.01  
+ 1st Qu.:18.95  
+ Median :25.60  
+ Mean   :25.60  
+ 3rd Qu.:32.12  
+ Max.   :68.45  
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k+kp}{names}\PY{p}{(}v1\PY{p}{)}
+\end{Verbatim}
+
+    \begin{enumerate*}
+\item 'age'
+\item 'gender'
+\item 'race'
+\item 'marital'
+\item 'area'
+\item 'income'
+\item 'education'
+\item 'mortscore'
+\item 'betterwalk'
+\item 'betterbed'
+\item 'betterbath'
+\item 'bettermove'
+\item 'betterbreath'
+\item 'betterheal'
+\item 'bettertaking'
+\item 'adverseevent'
+\item 'drugu'
+\item 'alcolu'
+\item 'istimely'
+\item 'taughtdrug'
+\item 'checkfall'
+\item 'checkdepression'
+\item 'checkflushot'
+\item 'checkvaccine'
+\item 'checkfootcare'
+\item 'HHTcare'
+\item 'HHTcomm'
+\item 'HHTdiscuss'
+\item 'admittedhospital'
+\item 'urgent'
+\item 'readmittedhospital'
+\item 'emergencyhospital'
+\item 'LOS'
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{k+kp}{dim}\PY{p}{(}v1\PY{p}{)}
+\end{Verbatim}
+
+    \begin{enumerate*}
+\item 98484
+\item 33
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{}checking for missing elements in the response variable if any}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{k+kp}{sum}\PY{p}{(}\PY{k+kp}{is.na}\PY{p}{(}v1\PY{o}{\PYZdl{}}LOS\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}there is none}
+\end{Verbatim}
+
+    0
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} regfit.full\PY{o}{=}regsubsets \PY{p}{(}LOS∼\PY{l+m}{.}\PY{p}{,}data\PY{o}{=}v1 \PY{p}{,}nvmax \PY{o}{=}\PY{l+m}{33}\PY{p}{)}
+         reg.summary \PY{o}{=}summary \PY{p}{(}regfit.full\PY{p}{)}
+         \PY{k+kp}{names}\PY{p}{(}reg.summary \PY{p}{)}
+\end{Verbatim}
+
+    \begin{enumerate*}
+\item 'which'
+\item 'rsq'
+\item 'rss'
+\item 'adjr2'
+\item 'cp'
+\item 'bic'
+\item 'outmat'
+\item 'obj'
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} reg.summary\PY{o}{\PYZdl{}}rsq
+\end{Verbatim}
+
+    \begin{enumerate*}
+\item 0.216817558140322
+\item 0.2524929628619
+\item 0.311294087931846
+\item 0.360205325213535
+\item 0.396877424544963
+\item 0.419418287029082
+\item 0.429913003187811
+\item 0.43934902024186
+\item 0.44678700566465
+\item 0.453770856572731
+\item 0.456550294126207
+\item 0.458417211120459
+\item 0.45878358551119
+\item 0.45892515421889
+\item 0.45900525291932
+\item 0.459038454219399
+\item 0.459062924299855
+\item 0.459086161878015
+\item 0.459103274705343
+\item 0.459114955192509
+\item 0.459125093139782
+\item 0.459129687335246
+\item 0.45913401901854
+\item 0.459137635944343
+\item 0.459140439243708
+\item 0.459142656090536
+\item 0.459144493890497
+\item 0.459145247667448
+\item 0.459145647474019
+\item 0.459145837844762
+\item 0.459145897424691
+\item 0.459145902636378
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} k\PY{o}{=}\PY{l+m}{10}
+         set.seed \PY{p}{(}\PY{l+m}{1}\PY{p}{)}
+         folds\PY{o}{=}sample \PY{p}{(}\PY{l+m}{1}\PY{o}{:}k\PY{p}{,}\PY{k+kp}{nrow}\PY{p}{(}v1 \PY{p}{)}\PY{p}{,}replace \PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+         cv.errors \PY{o}{=}\PY{k+kt}{matrix} \PY{p}{(}\PY{k+kc}{NA} \PY{p}{,}k\PY{p}{,}\PY{l+m}{19}\PY{p}{,} dimnames \PY{o}{=}\PY{k+kt}{list}\PY{p}{(}\PY{k+kc}{NULL} \PY{p}{,} paste \PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{l+m}{19}\PY{p}{)} \PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{tabular}{lllllllllllllllllll}
+ 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19\\
+\hline
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+	 NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k+kr}{for}\PY{p}{(}j \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}k\PY{p}{)}\PY{p}{\PYZob{}}
+         best.fit \PY{o}{=}regsubsets \PY{p}{(}LOS∼\PY{l+m}{.}\PY{p}{,}data\PY{o}{=}v1 \PY{p}{[}folds \PY{o}{!=}j\PY{p}{,}\PY{p}{]}\PY{p}{,}
+         nvmax \PY{o}{=}\PY{l+m}{19}\PY{p}{)}
+         \PY{k+kr}{for}\PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{l+m}{19}\PY{p}{)} \PY{p}{\PYZob{}}
+         pred\PY{o}{=}predict \PY{p}{(}best.fit \PY{p}{,}v1 \PY{p}{[}folds \PY{o}{==}j\PY{p}{,}\PY{p}{]}\PY{p}{,} id\PY{o}{=}i\PY{p}{)}
+         cv.errors \PY{p}{[}j\PY{p}{,}i\PY{p}{]}\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(} \PY{p}{(}v1\PY{o}{\PYZdl{}}LOS\PY{p}{[}folds \PY{o}{==}j\PY{p}{]}\PY{o}{\PYZhy{}}pred\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+         \PY{p}{\PYZcb{}}
+         \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        Error in UseMethod("predict"): no applicable method for 'predict' applied to an object of class "regsubsets"
+    Traceback:
+    
+
+        1. predict(best.fit, v1[folds == j, ], id = i)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} x\PY{o}{=}model.matrix \PY{p}{(}LOS∼\PY{l+m}{.}\PY{p}{,}v1 \PY{p}{)}\PY{p}{[}\PY{p}{,}\PY{l+m}{\PYZhy{}1}\PY{p}{]}
+         y\PY{o}{=}v1\PY{o}{\PYZdl{}}LOS
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{k+kp}{head}\PY{p}{(}x\PY{p}{)}
+         \PY{k+kp}{head}\PY{p}{(}y\PY{p}{)}
+\end{Verbatim}
+
+    \begin{tabular}{r|llllllllllllllllllllllllllllllll}
+  & age & gender & race & marital & area & income & education & mortscore & betterwalk & betterbed & ... & checkflushot & checkvaccine & checkfootcare & HHTcare & HHTcomm & HHTdiscuss & admittedhospital & urgent & readmittedhospital & emergencyhospital\\
+\hline
+	1 & 22.09     & 1         & 0         & 0         & 0         & 174.95024 & 1         & 96015     & 1         & 0         & ...       & 1         & 1         & 0         & 1         & 1         & 1         & 1         & 1         & 1         & 1        \\
+	2 & 40.96     & 1         & 0         & 0         & 1         &  82.23359 & 1         & 36806     & 1         & 0         & ...       & 1         & 0         & 0         & 1         & 0         & 1         & 0         & 0         & 0         & 0        \\
+	3 & 81.00     & 1         & 0         & 0         & 1         &  35.00407 & 0         &  4706     & 1         & 1         & ...       & 1         & 0         & 0         & 1         & 1         & 1         & 0         & 0         & 0         & 0        \\
+	4 & 29.16     & 0         & 0         & 0         & 0         & 197.86215 & 1         & 41436     & 1         & 0         & ...       & 1         & 0         & 1         & 1         & 1         & 1         & 0         & 0         & 0         & 0        \\
+	5 & 46.24     & 0         & 2         & 0         & 0         & 115.20864 & 1         & 42496     & 1         & 1         & ...       & 1         & 1         & 0         & 1         & 1         & 1         & 1         & 0         & 1         & 0        \\
+	6 & 40.96     & 0         & 0         & 4         & 0         & 111.87287 & 1         & 80594     & 0         & 1         & ...       & 1         & 1         & 1         & 1         & 1         & 1         & 1         & 1         & 0         & 0        \\
+\end{tabular}
+
+
+    
+    \begin{enumerate*}
+\item 24.6
+\item 8.37
+\item 40.12
+\item 14.79
+\item 33.68
+\item 36.21
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{k+kn}{library} \PY{p}{(}leaps\PY{p}{)}
+         \PY{k+kn}{library}\PY{p}{(}glmnet\PY{p}{)}
+         grid \PY{o}{=}\PY{l+m}{10}\PY{o}{\PYZca{}} seq \PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{\PYZhy{}2}\PY{p}{,} length \PY{o}{=}\PY{l+m}{100}\PY{p}{)}
+         lasso.mod \PY{o}{=}glmnet \PY{p}{(}x\PY{p}{[}train \PY{p}{,}\PY{p}{]}\PY{p}{,}y\PY{p}{[}train\PY{p}{]}\PY{p}{,}alpha \PY{o}{=}\PY{l+m}{1}\PY{p}{,} lambda \PY{o}{=}grid\PY{p}{)}
+         plot\PY{p}{(}lasso.mod\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{c+c1}{\PYZsh{}Let us perform  cross validation and compute the associated error}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} set.seed \PY{p}{(}\PY{l+m}{1}\PY{p}{)}
+         cv.out \PY{o}{=}cv.glmnet \PY{p}{(}x\PY{p}{[}train \PY{p}{,}\PY{p}{]}\PY{p}{,}y\PY{p}{[}train\PY{p}{]}\PY{p}{,}alpha \PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+         plot\PY{p}{(}cv.out\PY{p}{)}
+         bestlam \PY{o}{=}cv.out\PY{o}{\PYZdl{}}lambda.min
+         lasso.pred\PY{o}{=}predict \PY{p}{(}lasso.mod \PY{p}{,}s\PY{o}{=}bestlam \PY{p}{,}newx\PY{o}{=}x\PY{p}{[}test \PY{p}{,}\PY{p}{]}\PY{p}{)}
+         \PY{k+kp}{mean}\PY{p}{(}\PY{p}{(} lasso.pred \PY{o}{\PYZhy{}}y.test\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+\end{Verbatim}
+
+    51.3209204495492
+
+    
+    0.00880989909460224
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} out\PY{o}{=}glmnet \PY{p}{(}x\PY{p}{,}y\PY{p}{,}alpha \PY{o}{=}\PY{l+m}{1}\PY{p}{,} lambda \PY{o}{=}grid\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} lasso.coef\PY{o}{=}predict \PY{p}{(}out \PY{p}{,}type \PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{coefficients\PYZdq{}}\PY{p}{,}s\PY{o}{=}bestlam \PY{p}{)}\PY{p}{[}\PY{l+m}{1}\PY{o}{:}\PY{l+m}{32} \PY{p}{,}\PY{p}{]}
+         lasso.coef
+\end{Verbatim}
+
+    \begin{description*}
+\item[(Intercept)] 16.8087971487508
+\item[age] 0.306001328407534
+\item[gender] -3.87699593977067
+\item[race] 0
+\item[marital] -0.00622969898190414
+\item[area] -5.36996415992021
+\item[income] -0.0645952227953886
+\item[education] -0.00518472304586249
+\item[mortscore] -3.04189951987852e-07
+\item[betterwalk] 0
+\item[betterbed] 0.355458958892627
+\item[betterbath] -0.470794243928366
+\item[bettermove] -0.153559093026969
+\item[betterbreath] -0.0907954337616636
+\item[betterheal] 0
+\item[bettertaking] -0.0845027018234839
+\item[adverseevent] -0.0304535378714095
+\item[drugu] -1.75783770162631
+\item[alcolu] 3.6227234997066
+\item[istimely] 0.292243849043898
+\item[taughtdrug] -0.0256425413860583
+\item[checkfall] 3.28484407072939
+\item[checkdepression] 1.68421286900006
+\item[checkflushot] 0.12579792545385
+\item[checkvaccine] 1.97529455798712
+\item[checkfootcare] 0.989402906258233
+\item[HHTcare] 0.189814663309576
+\item[HHTcomm] 0
+\item[HHTdiscuss] 0
+\item[admittedhospital] 2.13819519665585
+\item[urgent] 0
+\item[readmittedhospital] 0.0947356986718509
+\end{description*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} lasso.coef\PY{p}{[}lasso.coef \PY{o}{!=}\PY{l+m}{0}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{description*}
+\item[(Intercept)] 16.8087971487508
+\item[age] 0.306001328407534
+\item[gender] -3.87699593977067
+\item[marital] -0.00622969898190414
+\item[area] -5.36996415992021
+\item[income] -0.0645952227953886
+\item[education] -0.00518472304586249
+\item[mortscore] -3.04189951987852e-07
+\item[betterbed] 0.355458958892627
+\item[betterbath] -0.470794243928366
+\item[bettermove] -0.153559093026969
+\item[betterbreath] -0.0907954337616636
+\item[bettertaking] -0.0845027018234839
+\item[adverseevent] -0.0304535378714095
+\item[drugu] -1.75783770162631
+\item[alcolu] 3.6227234997066
+\item[istimely] 0.292243849043898
+\item[taughtdrug] -0.0256425413860583
+\item[checkfall] 3.28484407072939
+\item[checkdepression] 1.68421286900006
+\item[checkflushot] 0.12579792545385
+\item[checkvaccine] 1.97529455798712
+\item[checkfootcare] 0.989402906258233
+\item[HHTcare] 0.189814663309576
+\item[admittedhospital] 2.13819519665585
+\item[readmittedhospital] 0.0947356986718509
+\end{description*}
+
+
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
